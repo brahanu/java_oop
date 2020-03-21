@@ -1,0 +1,156 @@
+brahan
+
+
+
+=============================
+=      File description     =
+=============================
+The Jar file contain 8 files including the README file you are reading right now :)
+- SimpleSet.java - contain interface class that contain the basic method  of a Set
+- SimpleHashSet.java - an abstract class that implement SimpleSet, contain the basic
+                skeleton for hashTable
+- ClosedHashSet.java - extend the SimpleHashSet class, contain a implementation
+of a HashSet  based on closed-hashing with quadratic probing.
+- OpenHashSet.java - extend the SimpleHashSet class, contain a implementation of a
+    HashSet based on open-hashing with chaining.
+- CollectionFacadeSet.java - contains a class  which wraps an underlying Collection and serves
+    to both simplify its API and give it a common type with the implemented SimpleHashSets.
+- SimpleSetPerformanceAnalyzer.java -has a main method that measures the run-times requested
+                      in the "Performance Analysis" section.
+- RESULTS - file that includes all the   measures the run-times requested in the
+"Performance Analysis" section.
+
+
+=============================
+=          Design           =
+=============================
+
+Most of the design has been defined by the exercise pdf.
+I tried to keep the code as easy to understand as possible, while maintaining modularity and
+encapsulation concept's we have learned in the lectures and tirgulim.
+To maintain easy to read project, I used many helper methods, so that big methods like add and
+delete are broken into mini methods that can be changed and read easily.
+To maintain encapsulation i de-abstract some of the SimpleHashSet methods, and added setter to the
+capacity a method that relvent to both of SimpleHashSet "childs" and mange the capacity changes
+through the project. For the OpenHashSet I chose to use the Wrapper class solution that represented
+in the pdf, I created the class as nested one, because as we learned in the lecture if we have a
+class with a single propose, and we will use the object only at the OpenHashClass so it hold all
+the conditions to be a nested class. For the Facade in my understanding all we needed to do is
+maintain all the collections that pass through our Facade to be Set, so all we needed to do is to
+check for duplicated items. For the ClosedHashSet I didnt had to use any "smart" design choices,
+the class just extends the SimpleHashSet.
+
+
+=============================
+=  Implementation details   =
+=============================
+
+In you README, discuss the following:
+• How you implemented OpenHashSet’s table
+I chose to implement the OpehHashTable with a Wrapper class of LinkedList which implemented
+as a nested class of the class.
+There were 2 main reasons i chose to do so.
+When I started to write the exercise out of the 3 options given in the pdf, Wrapper was the easiest
+to understand, and easiest to implement.
+The second reason was sort of confirmation that I had choose the right option.
+After thinking about extending CollectionFacade and learning about what Facade is
+(done after i finished OpenHashSet), It made sense to use that option, but thinking about it more
+have raised a problem I will check contain twice (the facade add need to maintain a set, so we have
+to check if the item is alerdy in the set) but we alerdy check that when we adding to the openHashSet.
+In my understanding running time are important concept in this exercise, by checking contain
+twice we will get worst running time, then the wrapper. - this assumption I had in the begging
+exercise have been proved in my opinion when I compared my running time into running
+time of other people in the course.
+• How you implemented the deletion mechanism in ClosedHashSet
+I chose to define a string that will indicate that an object has been deleted.
+I chose so for 2 main reasons, one was that it was the most straight-forward solution to the problem.
+The second reason was more "Why I shouldnt use other solution".
+By not defining another class that will solve this problem, I avoid "abuse" (In my opinion)
+of objects, each class have to maintain encapsulation, by defining more and more class
+it makes it harder to maintain so. A single private string solve both of those problems
+without any complications. To assure that the solution wont be a restriction on the strings that
+the user can insert, we use == to compare references and not .equals("deleted object")
+ which compare values.
+
+
+=============================
+=    Answers to questions   =
+=============================
+
+In you README, discuss the following:
+• Discuss the results of the analysis in depth:
+– Account, in separate, for OpenHashSet’s and ClosedHashSet’s bad results for data1.txt
+As we have been told data1 contains 100k of items with the same hashCode, if we look at the results of
+add:
+OpenHashSet_AddData1 = 35107
+ClosedHashSet_AddData1 = 76347
+TreeSet_AddData1 = 58
+LinkedList_AddData1 = 29237
+HashSet_AddData1 = 39
+we see that open hash and LinkedList have similar running time. because all the items in the will
+be hashed into the same cell in the Table we get a similar to a regular linkedlist dataStructure
+(technically its just an array full of empty linked lists except of one cell that hold all the items).
+As we cann learn from the results we see that when hashing to the same place closed hash is the least
+efficient, although its expected to do so because of the way clamp work in ClosedHash. The clamp
+need to iterate 100k timesfor each item because we have a collision each insert.
+– Summarize the strengths and weaknesses of each of the data structures as reflected by
+the results. Which would you use for which purposes?
+– How did your two implementations compare between themselves?
+– How did your implementations compare to Java’s built in HashSet?
+If we compare only closed and open hash we can see that when we expected to have alot of collision
+uwe should se openHash, because its handle it faster.
+but if we look at the running time of add of data2 to the SimpleSets:
+OpenHashSet_AddData2 = 31
+ClosedHashSet_AddData2 = 10
+TreeSet_AddData2 = 36
+LinkedList_AddData2 = 16959
+HashSet_AddData2 = 5
+We can see that closedHashSet is better at inserting, the trivial explanation for this is that for items
+with diffrenet hashCode we are adding items with no collision between them, meaning its act similar to
+adding into an array. OpenHashSet also handle this pretty well with only 31.
+Its no sunrise that LinkedList has the worst adding time, as we learned in dast adding into linkedList
+while maintaining a Set structure will give us bad time and we shouldn't use it unless we have to.
+So in Total if we want to add items between Open and Closed we will choose
+open if we have alot of collision, closed if have less collision.
+If we can use Java HashSet we will always use it - as We can see he have the BEST adding running time.
+As for searching an item we can see:
+data1:
+OpenHashSet_Contains_hi1 = 21
+ClosedHashSet_Contains_hi1 = 11
+TreeSet_Contains_hi1 = 80
+LinkedList_Contains_hi1 = 471834
+HashSet_Contains_hi1 = 26
+data2:
+OpenHashSet_Contains_hi2 = 7
+ClosedHashSet_Contains_hi2 = 20
+TreeSet_Contains_hi2 = 68
+LinkedList_Contains_hi2 = 391317
+HashSet_Contains_hi2 = 10
+Its obvius that the LLS got worst running time because the DataStracuse isnt built for fast search
+like hashtable.
+Between Open and Closed its surprising to see that we got that the running time are inverted.
+Open was better at adding data 1 but got worst running time searching in it, same for closed and
+data2. We can try to explain that with maybe Open handle adding better but to search an item is
+similar to searching in linkedlist(but shorter one). and searching in closed is similar to searching
+in array.
+More interesting is to see the contain for the negative number, we have been told
+that the number has the same hashcode as the items in data1:
+OpenHashSet_Contains_negative = 559693
+ClosedHashSet_Contains_negative =940124
+TreeSet_Contains_negative = 119
+LinkedList_Contains_negative = 540640
+HashSet_Contains_negative =24
+My worst results was given by this value, Its not very surprising because in closedHashSet we will
+have to check all the item, without skipping on any (meaning O(n)), same for open that will
+acts excatly like a linkedList as we can see their running time are very similar.
+– Not mandatory: Did you find java’s HashSet performance on data1.txt surprising? Can
+you explain it?
+java hashSet are surprising, as we can see we got a scalable "tens" in all the method that involved
+it, We can just assume that java implement the DS with replacing the hashfunction from time time
+(assumption after its passed some collision threshold). By doing so java assure uniform distribution
+in the DS.
+
+=============================
+=        HashTable          =
+=============================
+:)

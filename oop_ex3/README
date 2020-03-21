@@ -1,0 +1,88 @@
+brahan
+
+
+
+=============================
+=      File description     =
+=============================
+The given JAR file contain 10 files excluding this READEME file.
+The files are in  2 different subjects:
+SpaceshipDepository- which hold all the classes and test for the class for a storage system in the spaceship:
+- Inventory -an abstract class that locker and longTerm classes extends, define the base functionality's every
+                Storage should have in the Spaceship
+- Locker.java - contain a class that define a single storage unit, each instance will be given a capacity to
+                that the locker will have
+- LongTermStorage.java - contain a class that define a longTerm storage unit,each instance will have a 1000
+                capacity field.
+- LockerTest.java - Test the functionality's the locker have.
+- LongTermTest.java - Test the functionally's the longTerm locker have.
+- SpaceShipDepositoryTest - a Test Suite which include all the Test from LockerTest and LongTermTest
+BoopingSite - which hold all the classes and test for a hotel search engine:
+- BoopingSite.java-contains a search engine class, the class constructor gets a txt file with a list of hotels
+                    and each method sort them by different preferences.
+- BoopingSiteTest.java -  Test the functionality's the BoopingSite have.
+- ArrangeHotelByStarRating.java - this class extends the Comparator interface java have, override the compare
+                                method to compare hotel object by their StarRating and by alphabet order.
+- ArrangeHotelByProximity.java - this class extends the Comparator interface java have, override the compare
+                                method to compare hotel object by their distance from a given point and by
+                                number of POI they have around them.
+=============================
+=          Design           =
+=============================
+In the SpaceshipDepository, I chose to use an abstract class from the following reasons:
+ - locker and longTermL locker are kind of the same thing, they both a storage units
+ - both share implementations (getCapacity,getInventory etc),
+   but not all the implementations (like addItems) so the master class cant implement all methods
+  by the mind map we saw in Tirgul 4 I understood that abstract will be the best for our case.
+So I added a abstract master class - Inventory which implement all the shared method, and some helper method
+that relevant to both classes so we wont do copy paste of code between the two classes.
+furthermore, in method like addItem, removeItem which include alot of cases I chose to
+use alot of helper method, as we learned in the Tirgul each method need to have only one goal, seprating
+big functions into smaller ones help the readability of the code, as we should desire.
+In the BoopingSite, I chose to build 2 more classes:
+  I know that we could override compare method in the main BoopingSite file, but to my opinion this could be
+  a little confusing, and lead people who will read our code later to some ambiguity about which compare
+  method we used. so in my opinion the best case was to separate the 2 override methods into different class
+  which all of there goal is to override the method.
+
+=============================
+=  Implementation details   =
+=============================
+In Inventory class I implmented the following methods:
+getInventory - which return a shallow copy of the Hashmap that represent the storage unit.
+getItemCount - get how many item of a single type we have in the locker
+getCapacity get the capacity of the locker
+getAvailableCapacity get the available capacity in the locker
+helpers :
+ invalidItem - check if the item is valid
+ notLegal - check if the item is legal
+ lockerHasRoomFor - check if the locker have room for the item
+ additionQuantityEdgeCase - adds zero item to the locker in case n is negative return ERROR
+ addItemToStorage return the value after the addition
+ setInventoryAddition - doing the acutal adding into the hashmap
+In Locker:
+addItem, remove item - add and remove items from the locker and some helper methods
+In LongTerm:
+addItem, resetInventory - add item or reset the storage
+In booping Site
+getHotelsInCityByRating  the method return an array of hotels in a given city sorted by Star rating,
+                    if 2 hotels are  in the same city and hae the same star rating they will
+                    be sorted by alphabet order
+getHotelsByProximity the method return array of hotels sorted by distance from a given point,
+            if 2 hotels are in the same distance sort them by the number f POI
+
+getHotelsInCityByProximity - the method sort hotels from a given city by distance from a
+                        given point and by number of POI
+getAllHotelByCity - filter hotels by city
+- ArrangeHotelByStarRating.java - this class extends the Comparator interface java have, override the compare
+                                method to compare hotel object by their StarRating and by alphabet order.
+- ArrangeHotelByProximity.java - this class extends the Comparator interface java have, override the compare
+                                method to compare hotel object by their distance from a given point and by
+                                number of POI they have around them.
+ In All the Test we have Test to check basic sanity checks for the methods and some special scenarios
+ I almost fall for and i think other people will do too.
+
+=============================
+=    Answers to questions   =
+=============================
+ Happy Pesech!!!

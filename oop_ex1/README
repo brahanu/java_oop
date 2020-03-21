@@ -1,0 +1,94 @@
+brahan
+
+
+
+=============================
+=      File description     =
+=============================
+    In the jar file, there are 3 files excluding this README file.
+
+     - Book.java - contains the Book class, and related methods
+     - Patron.java - contains the Patron class, and related methods
+     - Library.java - contains the Library class, and and related methods.
+
+
+=============================
+=          Design           =
+=============================
+    Each class defines a specific object that is crucial factor to the library system.
+    - The Patron class define the library clients, Each client is defined by his first and last name, and his
+    comic\dramatic\educational tendency which are numeric value that represent how much the client values each
+    factor, and by his enjoyment threshold which is the minimal numeric value that defined by all
+    three values defined above that promise the client will enjoy the book.
+    - The Book class define the books in the library system. Each book is defined by his title, author,
+    the year he been published, by his current borrower if there isnt one it will be -1,
+    and by three literature values : comic\dramatic\educational, each one is numeric value that
+    represent how much the book is funny\dramatic\educational.
+    - The Library class defines a library. Each library defined by its storage capacity - how many books can
+    the library hold, client capcity how many clients can enroll to the library, and by its borrowed book
+    capacity which is the maximum books the library can allow a single client to borrow.
+    I have added the following paramters to the class (defined by a single object independently):
+       booksArray - an array of all the books in the library, clientsArray - an array of all the library clients,
+       curBookBorrowed - an array in the size of clientArray which keep track of the number of borrowed books
+       each client in the library have borrowed.
+       The booksArray is init in the size storage capacity, and in the init of the library will be array of nulls.
+       The clientArray is init in the size of the clientcapcity and in the init of the library will be array of nulls.
+       The curbookborrowed array will by init in the size clientcapcity and is init with zeros.
+       Because we want an easier way to mange all the param, we will keep track of how many books we have
+       registered into the library, we will do the same for the client.(curBooksInLibrary,curClientsInLibrary)
+
+=============================
+=  Implementation details   =
+=============================
+    Patron:
+    - stringRepresentation() -  Returns a string representation of the patron, which is a sequence of its
+                                first and last name, separated by a single white space.
+    - getBookScore(Book book) - Returns the literary value this patron assigns to the given book.
+    - willEnjoyBook(Book book) - Returns true of this patron will enjoy the given book, false otherwise.
+
+    Book:
+    - stringRepresentation()  - Returns a string representation of the book, which is a sequence of the title,
+                                author, year of publication and the total literary value of the book,
+                                separated by commas, inclosed in square brackets.
+    - getLiteraryValue() - the literary value of this book, which is defined as the sum of its comic value,
+                                its dramatic value and its educational value.
+    - setBorrowerId - Sets the given id as the id of the current borrower of this book,
+                        -1 if no patron is currently borrowing it.
+    - getCurrentBorrowerId - the id of the current borrower of this book.
+    - returnBook() - Marks this book as returned == sets the book borrower as -1.
+    Library:
+    - addBookToLibrary(Book book) - Adds the given book to this library, if there is place available,
+                                    and it isn't already in the library. implented as adding the book to the
+                                    booksarray after checkinng if there is a place in the array
+    - registerPatronToLibrary(Patron patron) - checks if the given patron is well defined, and that we didnt
+                                               passed the client capcity if so adds the patron the the
+                                                librart clientArray.
+    - borrowBook(int bookId, int patronId) - for a given book checks if he is available, and if the client
+                                             will enjoy it, and if the client didnt passed the borrowing
+                                             capcity, if so let the patron borrowing it by assiging the
+                                             borrower in the book to the patron id.
+    - getBookId(Book book) - checks if the book is owened by the library ==
+                             checks if the book is in the booksarray.
+    - getPatronId(Patron patron) -  checks if the client is registerd to the library ==
+                                      checks if the clietnt is in clientArray.
+    - isBookAvailable(int bookId) - checks if the book is borrowed by other client,
+    - isBookIdValid(int bookId) - returns true if the given number is an id of some book in the library,
+                                  false otherwise.
+    - isPatronIdValid(int patronId) - Returns true if the given number is an id of a patron in the library,
+                                    false otherwise.
+    - returnBook(int bookId) - checks if the bookid is valid and that the book was borrowed by someone
+                                (meaning isbookavailable return False and then assigning the current
+                                borrower to -1 (done by using the Book method return book).
+    - suggestBookToPatron(int patronId) - checks what the enjoynment threshold of the given patron,
+                                          iterate thru the booksarray and look for the book that is available
+                                           which his score is beyond the clients threshold, and have the
+                                            maximum score from all the books that  holds all of those.
+
+
+
+
+=============================
+=    Answers to questions   =
+=============================
+
+Happy Purim!

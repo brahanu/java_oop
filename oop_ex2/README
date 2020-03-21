@@ -1,0 +1,85 @@
+brahan
+
+
+
+=============================
+=      File description     =
+=============================
+
+The Ex2.jar file contains 9 files, each define a class that together with the given
+SpaceWars class and ex2.jar define spacewars game. In addition to those i added a gif
+photo for which help define the special ship.
+- SpaceShip.java - contains the spaceship class, the master class of the game
+- SpaceShipFactory.java - contains the space factory class, generate the spaceships according to the user input
+- HumanShip.java - contains the human ships class, define the ship the user will play.
+- AutomaticShips.java - contains a master class of all the computer controlled ships.
+- Aggressive.java - contains a sub-class of the automatic ship, define an aggersive ship.
+- Basher.java - contains a sub-class of the automatic ship, define a basher type ship
+- Drunkard.java - contains a sub-class of the automatic ship, define a drunk pilot ship
+- Runner.java - contains a sub-class of the automatic ship, define a runner spaceship.
+- SpecialShip.java - contains a sub-class of the automatic ship, define a special type spaceship
+- Ghost.gif -  contains a photo that defines the special spaceship.
+
+
+
+=============================
+=          Design           =
+=============================
+I chose to implment the game in the following way:
+- Abstract master class - Spaceship
+- direct inherent classes - Human and AutomaticSpaceShip, both are direct extension of the Spaceship class
+    differ from each other.
+- Automatic is abstract class, and define the similarties that all the enemy ships share.
+- from the AutomaticSpaceship we have 5 successors: Aggersive,Basher,Drunkard, Runner,SpecialShip.
+    All of them are computer controlled ships and share similarities like behavior and image.
+Explanation:
+ I chose to use Abstract classes because I wanted the ability to create a template as broad as possible
+  so we can "crunch" alot of object types into it. We did so by uniting all the
+   enemy ships by one roof = AutomaticShips. furthermore the ability to define some methods as
+   abstract helps to implement every method in the very unique way that  suite the sub-class (like getImage)
+
+
+
+=============================
+=  Implementation details   =
+=============================
+    SpaceShip:
+doAction(SpaceWars game) - implment the game moves, dealing with energy in the master class
+shipEnergyManagementSystem - mange the energy after a hit in the game
+collidedWithAnotherShip - his method is called every time a collision with this ship occurs
+reset() This method is called whenever a ship has died. It resets the ship's attributes, and starts it at a new random position.
+isDead() check if the ship is dead
+getPhysics - return the location of the ship
+gotHit -  This method is called by the SpaceWars game object when ever this ship gets hit by a shot.
+abstract getImage - implemented in the sub classes
+fire(SpaceWars game) - check if we gave enough energy to shoot if we have we shoot
+shieldOn - check if we have enough energy to activate a shield, if so activate shield
+teleport - check if we have enough energy to teleport, if so teleport.
+     Humanships:
+doaction = move and do operation according to the user input
+getimage = define the human ship photo.
+     AutomaticShips:
+doaction - adds always activate to accelerate, gets the info about the closest ship
+getimage - define the automaticships photos.
+    Runner,Aggersive,Basher:
+    doAction = adds their unique properties.
+    Drunkard:
+This unit been partying before going to the mission so they trying to avoid problems
+and not ruin the mission, but the alcohol makes them irrational
+so they randomly change rules in the battlefield
+    specialship:
+Special unit of aggressive type ships that have invisibility cover
+all of the pilot are well trained and have one goal-to destroy the human ships in the most efficient way
+
+
+=============================
+=    Answers to questions   =
+=============================
+
+My consideration were to unite as many object that act a like under the same roof.
+Its Result a easy to understand code logic.
+because the program is divided like that if the next user would like to add a new enemies most of the
+implementation is already done, all he need to chose is the uniqe attribute his ship will have.
+furthermore this dividing allow us to hide most of the API that externel user doesnt need or care to see.
+The relationships between the classes is explained above, to my understanding this is the most intuitive
+way wo dived the classes.

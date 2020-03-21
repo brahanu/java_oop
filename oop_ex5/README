@@ -1,0 +1,64 @@
+brahan
+
+
+=============================
+=      File description     =
+=============================
+The jar file contains 1 package and the README file you are reading.
+The package filesprocessing contain 2 subpackages,4 classes and 6 exception classes.
+The package contain a file processing program.
+The program gets a directory and a command File paths and will print out all the file in the
+directory that hold the commands in the command file, and the warning if needed.
+filters package contain all the needed files to filter the files,including filter method and
+filter factory to create each filter according to the user input.
+orders package contain all the needed files to sort the files, and classes which override the
+java compare method, a order Factory for the orders so we will be able to create orders
+according to the user input.
+There are 2 types of exceptions Type one which only prints Warning messages and
+Type two which will make the program to exit.
+
+=============================
+=          Design           =
+=============================
+2.The project design is very similar to take 2 in the uploaded Ex5-Design Suggestions and Extra
+info ppt file in the module.
+To my understanding take 2 was the most easy to understand between the three.
+It kept the modularity principle to the maximum by separating each class into a different classes
+and even packages (order/filter).
+The flexibility of the code is also kept, if someone want to add new order/filter type all he need
+to do is to add a class into their package and add a call to the new class into the package factory.
+meaning there is no need to change any other classes.
+By dividing the project into different classes the understandability of the code has raised.
+The hierarchy of the project is:
+DirectoryProcessor -->Manager-->Parser-->Section-->and he connect between the two packges.
+the parser responsible on parsing the command file into sections
+the sections responsible on creating the order and filter, using their factory's.
+I used in the factorys a Decorator to implement the Negate operations.
+=============================
+=  Implementation details   =
+=============================
+filter package:
+we have master filter which is a interface filter class(same as the ppt in the moodle)
+each filter override the method filter which return a boolean value according to the needed
+condition.
+Order package:
+each class override the compare method.
+3.I chose to implement QuickSort, at the begging i implemented BubbleSort because its implementation
+was the easiest, but after the mail from the staff i changed it into randomized QuickSort
+as we learned in DAST its one of the most efficient sorting methods.
+I sort the files in an arrayList of files so i dont need to worry about duplicate items,
+because arrayList is not a set. furthermore the arraylist DS is very easy to mange
+because there is methods which java alerdy implemented and to my understanding we can assume that
+java will implement those methods much better then me.
+we have a method in the Sorter class which wraps the sorting algorithm so the next user will be
+able to change the sorting algorithm easily.
+1.the section class will handle all the Type one errors raised by the packages, will print an
+warning message if needed.
+the parser method will handle all BadsubSection exception and some IOExceptions.
+the manager will handle the IOExceptions and all the TypeTwoException we might have "missed"
+thru program.
+the DirectoryProcessor is the main class will handle the InvalidUsageExceptions
+=============================
+=    Answers to questions   =
+=============================
+ Happy Jerusalem Day! :)
